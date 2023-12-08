@@ -1,7 +1,32 @@
 // プログラミング言語:C++
-// コンパイル方法:g++ -std=c++17 22_12485-01-07.cpp
+// コンパイル方法:g++ -std=c++17 22_12485-01-08.cpp
 // 実行方法:コンパイルで生成したa.outというファイルを実行
 // (Ubuntu 20.04.06 LTSで"./a.out"で実行できることを確認した)
+
+/*
+実行結果
+[入力]
+alphabet size> 8
+p_1> 0.261
+p_2> 0.241
+p_3> 0.152
+p_4> 0.131
+p_5> 0.115
+p_6> 0.064
+p_7> 0.034
+p_8> 0.002
+[出力]
+cw for p_1: 00
+cw for p_2: 010
+cw for p_3: 011
+cw for p_4: 100
+cw for p_5: 1010
+cw for p_6: 1011
+cw for p_7: 11000
+cw for p_8: 110010000
+entropy: 2.594226
+average length: 2.998000
+*/
 
 #include <iostream>
 #include <string>
@@ -33,7 +58,7 @@ int main(void){
     vector<string> cw(n); //生成した符号をいれる配列
 
     for(int i=0;i<n;i++){
-        cout << "p_" << i+1 << '>';
+        cout << "p_" << i+1 << "> ";
         cin >> p.at(i); //第i情報源アルファベットの確率の受け取り
     }
 
@@ -43,7 +68,7 @@ int main(void){
         ave_len += len.at(i)*p.at(i); //平均符号長の計算
     }
 
-    struct node_t pool[256] = {{0}}; //ノードの集合
+    struct node_t pool[512] = {{0}}; //ノードの集合
     int nodes = 1; //ノード数
     node tree; //木
 
@@ -57,7 +82,7 @@ int main(void){
     for(int i=0;i<n;i++){
         tree = pool; //根に戻る
         for(int j=0;j<len.at(i);j++){
-            /*もし現在のノードに子がいないなら子ノードを作成*/
+            /*もし現在のノードに子がいないなら子ノードを作成*/ 
             if(tree->left == 0){
                 tree->left = pool + nodes;
                 nodes++;
@@ -68,28 +93,47 @@ int main(void){
                 tree->right->up = tree;
                 tree->right->symbol = tree->symbol + '1';
             }
-            if(tree->left->v != n + i && tree->left->leaf == 0){
-                if(j+1 != len.at(i)){
-                tree->left->v = n + i; //左ノードを訪問済みに変更
+            if(tree->left->v != n + i){
+                if(j+1 != len.at(i) && tree->left->leaf == 0){
                 tree = tree->left; //左ノードに移動する
+                tree->v = n + i; //左ノードを訪問済みに変更
                 }
-                else if(j+1 == len.at(i)){
+                else if(j+1 != len.at(i) && tree->left->leaf == 1){
+                    tree->left->v = n + i; //左ノードを訪問済みに変更
+                    j = j-1; //探索しなおし
+                }
+                else if(j+1 == len.at(i) && tree->left->leaf == 0){
                     tree->left->leaf = 1; //左ノードを葉とする
                     cw.at(i) = tree->left->symbol; //i番目の符号語は左ノードに対応する記号列
+                    tree->left->v = n + i; //左ノードを訪問済みに変更
+                }
+                else if(j+1 == len.at(i) && tree->left->leaf == 1){
+                    tree->left->v = n + i; //左ノードを訪問済みに変更
+                    j = j-1; //探索しなおし
                 }
             }
-            else if(tree->right->leaf == 0 && tree->right->v != n + i){
-                if(j+1 != len.at(i)){
-                tree->right->v = n + i; //右ノードを訪問済みに変更
-                tree = tree->right; //右ノードに移動
+            else if(tree->right->v != n + i){
+                if(j+1 != len.at(i) && tree->right->leaf == 0){
+                tree = tree->right; //右ノードに移動する
+                tree->v = n + i; //右ノードを訪問済みに変更
                 }
-                else if(j+1 == len.at(i)){
+                else if(j+1 != len.at(i) && tree->right->leaf == 1){
+                    tree->right->v = n + i; //右ノードを訪問済みに変更
+                    j = j-1; //探索しなおし
+                }
+                else if(j+1 == len.at(i) && tree->right->leaf == 0){
                     tree->right->leaf = 1; //右ノードを葉とする
-                    tree->leaf = 1; //子ノードがどちらも葉になったら今後の探索においてそのノードを探索しなくてよいので、現在のノードも(便宜的に)葉に変更
                     cw.at(i) = tree->right->symbol; //i番目の符号語は右ノードに対応する記号列
+                    tree->right->v = n + i; //右ノードを訪問済みに変更
                 }
-            } else {
-                tree = pool; //もし左右どちらのノードも探索済みだったら根に戻って探索を再開する
+                else if(j+1 == len.at(i) && tree->right->leaf == 1){
+                    tree->right->v = n + i; //右ノードを訪問済みに変更
+                    j = j-1; //探索しなおし
+                }
+            } 
+            else if(tree->left->v == n + i && tree->right->v == n + i){
+                tree = tree->up; //親ノードに戻る
+                j = j-2;
             }
         }
     }
