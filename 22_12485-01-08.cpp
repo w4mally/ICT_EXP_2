@@ -6,10 +6,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
+#include <iomanip>
 using namespace std;
 
 //木構造を作る構造体
-typedef struct node_t {
+typedef struct node_t{
     struct node_t *up; //親を指すポインタ
     struct node_t *left; //左側の子を指すポインタ
     struct node_t *right; //右側の子を指すポインタ
@@ -19,17 +21,26 @@ typedef struct node_t {
 } *node; //この構造体のポインタをnodeで表す
 
 int main(void){
+    int n = 0; //情報源アルファベットの要素数用の変数
+    double e = 0; //エントロピー用の変数
+    double ave_len = 0; //平均符号語長の用の変数
     /*情報源アルファベットの要素数の受け取り*/
-    int n = 0;
     cout << "alphabet size> ";
     cin >> n;
 
-    vector<int> len(n); //符号語長を受け取る配列
+    vector<double> p(n); //情報源アルファベットの確率を受け取る配列
+    vector<int> len(n); //確率から求めた各符号長を格納する配列
     vector<string> cw(n); //生成した符号をいれる配列
 
     for(int i=0;i<n;i++){
-        cout << "l_" << i+1 << '>';
-        cin >> len.at(i); //第i符号語の符号語長の受け取り
+        cout << "p_" << i+1 << '>';
+        cin >> p.at(i); //第i情報源アルファベットの確率の受け取り
+    }
+
+    for(int i=0;i<n;i++){
+        len.at(i) = (int)ceil(-log2(p.at(i))); //情報源アルファベットの確率から符号長を求める
+        e += -p.at(i)*log2(p.at(i)); 
+        ave_len += len.at(i)*p.at(i); //平均符号長の計算
     }
 
     struct node_t pool[256] = {{0}}; //ノードの集合
@@ -74,7 +85,7 @@ int main(void){
                 }
                 else if(j+1 == len.at(i)){
                     tree->right->leaf = 1; //右ノードを葉とする
-                    tree->leaf = 1; //子ノードがどちらも葉になったら今後の探索においてそのノードを探索しなくてよいので、(便宜的に)現在のノードも葉に変更
+                    tree->leaf = 1; //子ノードがどちらも葉になったら今後の探索においてそのノードを探索しなくてよいので、現在のノードも(便宜的に)葉に変更
                     cw.at(i) = tree->right->symbol; //i番目の符号語は右ノードに対応する記号列
                 }
             } else {
@@ -85,8 +96,12 @@ int main(void){
 
     /*生成した符号語の出力*/
     for(int i=0;i<n;i++){
-        cout << "cw for l_" << i+1 << ": " << cw.at(i) << endl;
+        cout << "cw for p_" << i+1 << ": " << cw.at(i) << endl;
     }
 
+    /*エントロピーと平均符号長の出力*/
+    cout << fixed;
+    cout << "entropy: " << setprecision(6) << e << endl;
+    cout << "average length: " << setprecision(6) << ave_len << endl; 
     return 0;
 }
