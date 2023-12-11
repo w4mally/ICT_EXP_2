@@ -3,6 +3,14 @@
 // 実行方法:コンパイルで生成したa.outというファイルを実行
 // (Ubuntu 20.04.06 LTSで"./a.out"で実行できることを確認した)
 
+/*
+実行結果
+[入力]
+0011100110101001100110010011001
+[出力]
+caacabbcacaccac
+*/
+
 #include <iostream>
 #include <string>
 using namespace std;

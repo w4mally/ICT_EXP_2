@@ -3,6 +3,14 @@
 // 実行方法:コンパイルで生成したa.outというファイルを実行
 // (Ubuntu 20.04.06 LTSで"./a.out"で実行できることを確認した)
 
+/*
+実行結果
+[入力]
+caaaaaacaacaaacbaacbbbccabbccb
+[出力]
+0011111110011100111100101110010101010010011010100100101
+*/
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -10,7 +18,7 @@ using namespace std;
 int main(void){
     string in; //入力を受け取る変数
     string out; //符号語を入れる変数
-    cout << "symblos> ";
+    cout << "symbols> ";
     cin >> in; //標準入力の受け取り
     
     for(int i=0;i<in.length();i++){
