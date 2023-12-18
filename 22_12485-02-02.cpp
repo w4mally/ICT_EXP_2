@@ -83,7 +83,7 @@ entropy: 5.539318
 average length: 5.577000
 symbols> abcdaabbccdd
 encoded> 11010000100011010101000010
-codewords> 110100001000110 0101000010
+codewords> 1101000010001100101000010
 decoded: abcdaabbccdd
 */
 
