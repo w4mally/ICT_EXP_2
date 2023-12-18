@@ -121,7 +121,7 @@ p: 各情報源アルファベットの確率
 sym_com: 各記号列を入れる
 ans: 各記号列の確率の計算結果を入れる
 */
-void cal_p(int m, int n, vector<int> &temp, vector<string> &symbols, vector<long double> &p, vector<string> &sym_com, vector<long double> &ans){
+void cal_p(int m, int n, vector<int> &temp, vector<char> &symbols, vector<long double> &p, vector<string> &sym_com, vector<long double> &ans){
     /*もしtempのサイズがnと等しくなったらtempの中身に従って記号列を求め、確率を計算*/
     if(temp.size() == n){
         ans.at(cnt) = 1;
@@ -151,7 +151,7 @@ int main(void){
 
     int ans_len = pow(m,n); //全パターンはm^n通り
 
-    vector<string> symbols(m); //情報源アルファベットの格納用の配列
+    vector<char> symbols(m); //情報源アルファベットの格納用の配列
     vector<long double> p(m); //情報源アルファベットの確率を格納する配列
     vector<string> sym_com(ans_len); //記号列のパターンを記録する配列
     vector<long double> ans(ans_len); //記号列の確率を記録する配列
