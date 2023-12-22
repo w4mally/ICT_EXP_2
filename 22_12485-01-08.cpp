@@ -64,7 +64,7 @@ int main(void){
 
     for(int i=0;i<n;i++){
         len.at(i) = (int)ceil(-log2(p.at(i))); //情報源アルファベットの確率から符号長を求める
-        e += -p.at(i)*log2(p.at(i)); 
+        e += -p.at(i)*log2(p.at(i)); //エントロピーの計算
         ave_len += len.at(i)*p.at(i); //平均符号長の計算
     }
 
