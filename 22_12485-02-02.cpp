@@ -82,9 +82,9 @@ cw for dda: 010110
 cw for ddb: 01110
 cw for ddc: 1100
 cw for ddd: 1000
-entropy: 5.539318
-average length: 5.577000
-encoded> 11010000100011010101000010
+entropy: 1.846439
+average length: 1.859000
+encoded: 11010000100011010101000010
 decoded: abcdaabbccdd
 */
 
@@ -251,6 +251,9 @@ int main(void){
         entropy += -p_com.at(i)*log2(p_com.at(i)); //エントロピーの計算
         ave_len += len.at(i)*p_com.at(i); //平均符号長の計算
     }
+    /*e=3個ごとに符号化しているのでエントロピーと平均符号長をそれぞれ3で割る*/
+    entropy = entropy/e;
+    ave_len = ave_len/e;
 
     /*エントロピーと平均符号長の出力*/
     cout << fixed;
@@ -272,7 +275,7 @@ int main(void){
     }
 
     /*符号化結果の出力*/
-    cout << "encoded> " << ans_enc << endl;
+    cout << "encoded: " << ans_enc << endl;
 
     string code; //符号の入力を受け取る変数
     string ans_dec; //codeのデコード結果を受け取る変数
