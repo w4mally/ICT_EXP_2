@@ -76,6 +76,7 @@ sym_com: 各記号列を入れる
 ans: 各記号列の確率の計算結果を入れる
 con_p: 記号生成の条件付確率を決める i行j列成分には第iシンボルが生起した後に第jシンボルが生起する確率が記録されている
 */
+
 void cal_p_markov(int m, int n, vector<int> &temp, vector<char> &symbols, vector<long double> &p, vector<string> &sym_com, vector<long double> &ans, vector<vector<long double>> &con_p){
     /*もしtempのサイズがnと等しくなったらtempの中身に従って記号列を求め、確率を計算*/
     if(temp.size() == n){
