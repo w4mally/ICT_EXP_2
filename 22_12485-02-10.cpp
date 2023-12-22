@@ -205,26 +205,32 @@ int main(void){
     string temp_char_ = "";
     vector<int> node_num; //中間符号語の第1要素を格納する配列
     vector<char> node_char; //中間符号語の第2要素を格納する配列
-    int cnt_dec = 1;
+    int cnt_dec = 1; // 復号に使うカウント変数
 
     cout << "codewords> ";
     cin >> cw;
 
+    /*
+    符号語から中間符号語を復元
+    中間符号語に変換した部分は符号語から削除
+    符号語が空になるまで繰り返す
+    */
     while(cw.empty() == 0){
+        /*最初は第2要素だけ*/
         if(cnt_dec == 1){
-            temp_char_ = cw.substr(0,8);
-            node_num.push_back(0);
-            node_char.push_back(ascii_to_char(temp_char_));
+            temp_char_ = cw.substr(0,8); // 符号語から先頭8文字を切り出す
+            node_num.push_back(0); // 第1要素は必ず0
+            node_char.push_back(ascii_to_char(temp_char_)); // 符号語先頭8文字をアスキーコードと見たときにそれが指している文字を第2要素として格納
             cw.erase(0,8);
             temp_char_ = "";
             cnt_dec++;
         } else {
-            temp_num_ = cw.substr(0, ceil(log2(cnt_dec)));
-            node_num.push_back(two_ten(temp_num_));
-            cw.erase(0,ceil(log2(cnt_dec)));
-            temp_char_ = cw.substr(0,8);
-            node_char.push_back(ascii_to_char(temp_char_));
-            cw.erase(0,8);
+            temp_num_ = cw.substr(0, ceil(log2(cnt_dec))); // 第1要素の桁数はceil(log2(cnt_dec))　その分だけ先頭から切り出す
+            node_num.push_back(two_ten(temp_num_)); // 切り出した第1要素分の2進数を10進数に変換して格納
+            cw.erase(0,ceil(log2(cnt_dec))); // 第1要素が格納できたらその分は削除
+            temp_char_ = cw.substr(0,8); // 符号語から先頭8文字を切り出す
+            node_char.push_back(ascii_to_char(temp_char_)); // 切り出した8文字をアスキーコードと見たときにそれが指している文字を第2要素として格納
+            cw.erase(0,8); // 第2要素が格納出来たらその分は削除
             temp_num_ = "";
             temp_char_ = "";
             cnt_dec++;
