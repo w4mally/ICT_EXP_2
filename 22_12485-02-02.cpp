@@ -4,6 +4,7 @@
 // (Ubuntu 20.04.06 LTSで"./a.out"で実行できることを確認した)
 
 /*
+実行結果
 [入力]
 alphabet size> 4
 symbol_1> a
@@ -14,6 +15,8 @@ symbol_3> c
 p_3> 0.3
 symbol_4> d
 p_4> 0.4
+symbols> abcdaabbccdd
+codewords> 1101000010001100101000010
 [出力]
 cw for aaa: 110100111
 cw for aab: 110100110
@@ -81,9 +84,7 @@ cw for ddc: 1100
 cw for ddd: 1000
 entropy: 5.539318
 average length: 5.577000
-symbols> abcdaabbccdd
 encoded> 11010000100011010101000010
-codewords> 1101000010001100101000010
 decoded: abcdaabbccdd
 */
 
@@ -135,7 +136,13 @@ void cal_p(int m, int n, vector<int> &temp, vector<char> &symbols, vector<long d
     }
 }
 
-/*各ノードに符号を割り当てる再帰関数*/
+/*
+関数 code_create
+深さ優先探索を用いて各ノードに符号を割り当てる再帰関数
+tree: 符号割り当てを行いたい木
+x: treeの一番後ろの添え字
+
+*/
 void code_create(vector<node> &tree, int x){
     /*子ノードを持たないノードにあたるまで再帰を続ける*/
     if(tree.at(x).child.size() != 0){
@@ -276,7 +283,7 @@ int main(void){
     /*
     i=1~maxlenとして
     codeについて、先頭i文字を見る
-    もし先頭i文字がdecmapのkeyとして存在するならそれに対応するvalueをデコード結果の末尾に追加してcodeから先頭i文字を消去
+    もし先頭i文字がdecmapのkeyとして存在するならそれに対応するvalueを復号結果の末尾に追加してcodeから先頭i文字を消去
     これをcodeが空になるまで続ける
     */
     while(code.empty() == 0){
@@ -288,7 +295,7 @@ int main(void){
         }
     }
 
-    /*デコード結果の出力*/
+    /*復号結果の出力*/
     cout << "decoded: " << ans_dec << endl;
 
     return 0;
