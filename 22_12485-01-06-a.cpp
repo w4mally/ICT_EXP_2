@@ -6,9 +6,9 @@
 /*
 実行結果
 [入力]
-111111010001001111111111101001
+codewords> 111111010001001111111111101001
 [出力]
-bbbbbbabaaabaabbbbbbbbbbbabaab
+symbols: bbbbbbabaaabaabbbbbbbbbbbabaab
 */
 
 #include <iostream>

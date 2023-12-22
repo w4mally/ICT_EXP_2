@@ -19,7 +19,7 @@ symbols> aadaadaabcccbdbcbacc
 codewords> 00101011001100110011             
 length> 30
 [出力]
-range: [0.3360268713, 0.3360268713)
+range: [0.3360268712840387789154636, 0.3360268712840835686895668)
 encoded: 0101011000000101110110110110011010111110000000
 decode: aaabdaaaaacaaaaaabababcbbbbadd
 */
@@ -75,7 +75,7 @@ int main(void){
 
     /*計算した区間の上限と下限を出力*/
     cout << fixed;
-    cout << "range: [" <<  setprecision(10) << ans.first << ", " << ans.second << ")" << endl;
+    cout << "range: [" <<  setprecision(25) << ans.first << ", " << ans.second << ")" << endl;
 
     double rep_value = (ans.first+ans.second)/2; //代表値
     int code_len = ceil(-log2(ans_len)) + 1; //符号長
