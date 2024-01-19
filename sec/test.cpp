@@ -10,42 +10,44 @@
 #include <fstream>
 using namespace std;
 
+void get_char_histogram(string input, vector<int> &char_hist){
+    /*asciiコードは32~127(96個)*/
+    int i, j, t;
+    int len;
+
+    /*文字列の長さ取得*/
+    len = input.length();
+
+    /*ヒストグラムの初期化*/
+    for(i=32;i<128;i++){
+        char_hist.at(i) = 0;
+    }
+
+    for(i=0;i<len;i++){
+        char_hist.at(input.at(i))++;
+    }
+}
+
 int main(void){
     string name;
     string plain_text;
-    string decipher;
+    string cipher;
 
-    // cout << "Filename?>";
-    // cin >> name;
-    ifstream ifs("plaintext.txt");
+    ifstream ifs("cipher_p.txt");
     if(!ifs){ 
         cout << "file not open";
     }
-    ifstream ifs_("decipher.txt");
-    if(!ifs_){ 
-        cout << "file not open";
-    }
 
-    cout << "plaintext: " << endl;
-    while(getline(ifs, plain_text)){
-		cout << plain_text;
-	}
-    cout << endl;
-    cout << "result: " << endl;
-    while(getline(ifs_, decipher)){
-		cout << decipher;
-	}
+    getline(ifs, cipher);
 
-    int cnt = 0;
-    for(int i=0;i<(int)plain_text.length();i++){
-        if(plain_text.at(i) != decipher.at(i)){
-            cnt++;
-        } 
+    vector<int> hist(1000);
+    get_char_histogram(cipher, hist);
+
+    for(int i=32;i<128;i++){
+        cout << '[' << i << ", " << hist.at(i) << ']' << endl;
     }
-    cout << endl;
-    cout << "err: " << cnt << endl;
 
     ifs.close();
-    ifs_.close();
+
     return 0;
 }

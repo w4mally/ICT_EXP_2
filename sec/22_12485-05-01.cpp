@@ -8,8 +8,7 @@
 #include <fstream>
 using namespace std;
 
-void shuffle_ascii(string &input, string &output, int *tbl)
-{
+void shuffle_ascii(string &input, string &output, int *tbl){
 
 	/*asciiコードは32~127の96個*/
 
@@ -21,7 +20,6 @@ void shuffle_ascii(string &input, string &output, int *tbl)
 
 	/*暗号化/復号*/
 	for(i = 0; i < len; i++){
-		// output[i] = tbl[input[i]];
         char tmp = tbl[input[i]];
         output.push_back(tmp);
 	}
