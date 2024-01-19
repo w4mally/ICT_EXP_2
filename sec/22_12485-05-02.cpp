@@ -63,7 +63,7 @@ int main(void){
     cout << "**********    Histogram is displayed.   ***********" << endl;
     cout << "*****************************************************" << endl;
     cout << "\n\n";
-
+    
     for(int i=32;i<128;i++){
         cout << '[' << (char)i << ", " << char_hist.at(i) << ']' << endl;
         ofs << i << ", " << char_hist.at(i) << endl;

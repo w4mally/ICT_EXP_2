@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://q.trap.jp/
+HostUrl=https://traq.s3.ap-northeast-1.wasabisys.com/196d4b1d-b09e-467b-b6b2-dbfb026bb191?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=4AC1JP08MENGNC7NJVGI%2F20240119%2Fap-northeast-1%2Fs3%2Faws4_request&X-Amz-Date=20240119T000812Z&X-Amz-Expires=300&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=4c6fa8574d854cfd164d7f4b507d0f06e6e36161d90f6b3f3959c622944deba0

@@ -35,31 +35,31 @@ int main(void){
 	int i, j, t;
 
 	/*平文ファイルオープン*/
-    ifstream ifs("plaintext.txt");
+    ifstream ifs("plaintext_.txt");
     if(!ifs){ 
         cout << "file not open";
     }
-    ofstream fo_e("cipher.txt");
+    ofstream fo_e("cipher_.txt");
     if(!fo_e){
         cout << "er";
     }
-    ofstream fo_d("decipher.txt");
+    ofstream fo_d("decipher_.txt");
     if(!fo_d){
         cout << "er";
     }
-    ofstream fo_t("subcipher_table.txt");
+    ofstream fo_t("subcipher_table_.txt");
     if(!fo_t){
         cout << "er";
     }
-    ofstream fo_it("subcipher_inv_table.txt");
+    ofstream fo_it("subcipher_inv_table_.txt");
     if(!fo_it){
         cout << "er";
     }
-    ofstream fo_t_a("subcipher_table_a.txt");
+    ofstream fo_t_a("subcipher_table_a_.txt");
     if(!fo_t_a){
         cout << "er";
     }
-    ofstream fo_it_a("subcipher_inv_table_a.txt");
+    ofstream fo_it_a("subcipher_inv_table_a_.txt");
     if(!fo_it_a){
         cout << "er";
     }
@@ -99,10 +99,11 @@ int main(void){
 	}
 
 	/*対象文字コードの設定*/
-	/*スペース、カンマ、ピリオド*/
+	/*スペース、カンマ、ピリオド、ハイフン*/
 	t_table[0] = 32;
 	t_table[1] = 44;
 	t_table[2] = 46;
+	t_table[55] = 45;
 
 	/*A-Z*/
 	for(i = 65; i < 91; i++){
@@ -115,8 +116,8 @@ int main(void){
 	}
 
 	/*ランダム換字テーブルの設定*/
-	for(i = 0;i < 55; i++){
-		j = rand()%55;
+	for(i = 0;i < 56; i++){
+		j = rand()%56;
 		t = table[t_table[i]];
 		table[t_table[i]] = table[t_table[j]];
 		table[t_table[j]] = t;
@@ -125,12 +126,10 @@ int main(void){
 
 	/*ランダム換字テーブルの保存*/
 	for(i = 32; i < 128; i++){
-		// fprintf(fo_t,"%c, %c\n",i, table[i]);
         fo_t << (char)i << ", " << (char)table[i] << endl;
 	}
 
 	for(i = 32; i < 128; i++){
-		// fprintf(fo_t_a,"%c, %c\n",i, table[i]);
         fo_t_a << i << ", " << table[i] << endl;
 	}
 
@@ -172,8 +171,8 @@ int main(void){
 	}
 
 	/* ランダム逆換字テーブルの設定 */
-	for(i = 0;i < 55; i++){
-		j = rand()%55;
+	for(i = 0;i < 56; i++){
+		j = rand()%56;
 		t = table[t_table[i]];
 		table[t_table[i]] = table[t_table[j]];
 		table[t_table[j]] = t;
